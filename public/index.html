@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+  	 <!-- Compiled and minified CSS -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+	  <!-- Compiled and minified JavaScript -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	</head>
+
+	<style>
+		.chat-container {
+			margin: 0 auto;
+			width: 100%;
+			text-align: center;
+		}
+
+		@media screen and (min-width: 768px){
+			.chat-container {
+				width: 50%;
+			}
+		}
+	</style>
+
+	<script>
+		$(document).ready(function(){
+			$("#text").keyup(function(event){
+
+				
+
+				if(event.which == 13){
+					//Enter key
+
+					//Update view
+					var p = $("<p>").text("User: " + $(this).val());
+					$(".chat-container").append(p);
+
+					$.post("/interprete", {
+						text: $(this).val()
+					}, function(res){
+						//Update view
+						var p = $("<p>").text("Bot: " + res);
+						$(".chat-container").append(p);
+					});
+
+					$(this).val("");
+				}
+
+			
+			});
+		});
+
+	</script>
+
+	<body>
+		<h4>Naive Chatbot</h4>
+
+		<div class="chat-container">
+			<input type="text" name="text" id="text" placeholder="type sth!"/>
+			<p>Bot: hi</p>
+		</div>
+		
